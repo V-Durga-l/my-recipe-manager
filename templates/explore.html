@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Recipes{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Explore Community Recipes</h2>
+</div>
+
+{% if recipes %}
+<div class="row">
+    {% for recipe in recipes %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">
+                    {% if recipe.description %}
+                        {{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}
+                    {% endif %}
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        {{ recipe.cooking_time }} min • {{ recipe.difficulty }} • {{ recipe.category }}
+                        <span class="badge bg-success">Public</span>
+                    </small>
+                </p>
+                <p class="card-text">
+                    <small>By: {{ recipe.author.username }}</small>
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-outline-success">View Recipe</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <h4>No public recipes available</h4>
+    <p class="text-muted">There are no public recipes in the community yet.</p>
+    <a href="{{ url_for('add_recipe') }}" class="btn btn-success">Be the first to share a recipe!</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Dashboard</h2>
+    <a href="{{ url_for('add_recipe') }}" class="btn btn-success">+ Add New Recipe</a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>My Recipes</h4>
+        {% if my_recipes %}
+            {% for recipe in my_recipes %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            {{ recipe.cooking_time }} min • {{ recipe.difficulty }} • {{ recipe.category }}
+                            {% if recipe.is_public %}
+                                <span class="badge bg-success">Public</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Private</span>
+                            {% endif %}
+                        </small>
+                    </p>
+                    <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-outline-success">View</a>
+                    <a href="{{ url_for('edit_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                You haven't added any recipes yet. <a href="{{ url_for('add_recipe') }}">Add your first recipe!</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <h4>Community Recipes</h4>
+        {% if public_recipes %}
+            {% for recipe in public_recipes %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h6 class="card-title">{{ recipe.title }}</h6>
+                    <p class="card-text">
+                        <small>By {{ recipe.author.username }} • {{ recipe.cooking_time }}min</small>
+                    </p>
+                    <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-outline-success">View Recipe</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No public recipes available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

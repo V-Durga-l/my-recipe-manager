@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-4">🍳 Welcome to Recipe Manager</h1>
+            <p class="lead">Your digital cookbook for storing and sharing recipes</p>
+            
+            {% if not current_user.is_authenticated %}
+            <div class="mt-4">
+                <a class="btn btn-success btn-lg me-3" href="{{ url_for('register') }}">Get Started</a>
+                <a class="btn btn-outline-success btn-lg" href="{{ url_for('login') }}">Login</a>
+            </div>
+            {% else %}
+            <div class="mt-4">
+                <a class="btn btn-success btn-lg me-3" href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+                <a class="btn btn-outline-success btn-lg" href="{{ url_for('add_recipe') }}">Add Recipe</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

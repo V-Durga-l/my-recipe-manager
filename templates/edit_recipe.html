@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Recipe{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2>Edit Recipe</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Recipe Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ recipe.title }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ recipe.description }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="ingredients" class="form-label">Ingredients</label>
+                <textarea class="form-control" id="ingredients" name="ingredients" rows="6" required>{{ recipe.ingredients }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="instructions" class="form-label">Instructions</label>
+                <textarea class="form-control" id="instructions" name="instructions" rows="8" required>{{ recipe.instructions }}</textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="cooking_time" class="form-label">Cooking Time (minutes)</label>
+                    <input type="number" class="form-control" id="cooking_time" name="cooking_time" value="{{ recipe.cooking_time }}">
+                </div>
+                <div class="col-md-4">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select class="form-select" id="difficulty" name="difficulty">
+                        <option value="Easy" {% if recipe.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                        <option value="Medium" {% if recipe.difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+                        <option value="Hard" {% if recipe.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="Vegetarian" {% if recipe.category == 'Vegetarian' %}selected{% endif %}>Vegetarian</option>
+                        <option value="Non-vegetarian" {% if recipe.category == 'Non-vegetarian' %}selected{% endif %}>Non-vegetarian</option>
+                        <option value="Vegan" {% if recipe.category == 'Vegan' %}selected{% endif %}>Vegan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="is_public" name="is_public" {% if recipe.is_public %}checked{% endif %}>
+                <label class="form-check-label" for="is_public">Make this recipe public</label>
+            </div>
+
+            <button type="submit" class="btn btn-success">Update Recipe</button>
+            <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

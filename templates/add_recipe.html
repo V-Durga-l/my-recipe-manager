@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Add Recipe{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2>Add New Recipe</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Recipe Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="ingredients" class="form-label">Ingredients</label>
+                <textarea class="form-control" id="ingredients" name="ingredients" rows="6" required 
+                          placeholder="Enter each ingredient on a new line..."></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="instructions" class="form-label">Instructions</label>
+                <textarea class="form-control" id="instructions" name="instructions" rows="8" required
+                          placeholder="Enter step-by-step instructions..."></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="cooking_time" class="form-label">Cooking Time (minutes)</label>
+                    <input type="number" class="form-control" id="cooking_time" name="cooking_time">
+                </div>
+                <div class="col-md-4">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select class="form-select" id="difficulty" name="difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Non-vegetarian">Non-vegetarian</option>
+                        <option value="Vegan">Vegan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="is_public" name="is_public">
+                <label class="form-check-label" for="is_public">Make this recipe public</label>
+            </div>
+
+            <button type="submit" class="btn btn-success">Add Recipe</button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
