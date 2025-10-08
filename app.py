@@ -162,7 +162,14 @@ def my_recipes():
 def explore():
     recipes = Recipe.query.filter_by(is_public=True).filter(Recipe.user_id != current_user.id).all()
     return render_template('explore.html', recipes=recipes)
+# Add this BEFORE the if __name__ == '__main__': line
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
+# OR if that doesn't work, use this:
+with app.app_context():
+    db.create_all()
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
